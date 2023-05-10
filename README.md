@@ -1,5 +1,5 @@
 # Guitar tabs generator
-An application that generates tablature for the guitar using ChapGPT api, using Avalonia UI and C#.
+An application that generates tablature for the guitar using ChatGPT api, using Avalonia UI and C#.
 The application will allow convenient creation of tablature for the guitar for different situations, create a simple accompaniment or a melody for the main menu of the game.
 
 ```
