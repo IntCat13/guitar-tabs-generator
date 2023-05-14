@@ -4,4 +4,5 @@ namespace GuitarTabsGenerator.ViewModels;
 
 public class ViewModelBase : ReactiveObject
 {
+    
 }

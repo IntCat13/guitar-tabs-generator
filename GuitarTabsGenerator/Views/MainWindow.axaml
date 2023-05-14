@@ -8,5 +8,12 @@
         x:Class="GuitarTabsGenerator.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="GuitarTabsGenerator">
+        
+        <Window.Styles>
+                <Style Selector = "Button">
+                        <Setter Property = "Foreground" Value = "#FFFFFFFF" />
+                </Style>
+        </Window.Styles>
+        
         <views:MainView />
 </Window>

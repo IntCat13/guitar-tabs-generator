@@ -20,6 +20,14 @@ public class GptConnection
         });
     }
     
+    public GptConnection(string key)
+    {
+        _openAiService = new OpenAIService(new OpenAiOptions()
+        {
+            ApiKey =  key
+        });
+    }
+
     // Method that make request to OpenAI API with defined configuration
     private async Task<ChatCompletionCreateResponse> CreateRequest(RequestConfig config)
     {

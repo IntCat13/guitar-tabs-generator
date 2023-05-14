@@ -11,6 +11,41 @@
          to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
     <vm:MainViewModel />
   </Design.DataContext>
-
-  <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    
+  <!-- Dividing the window into two parts, with two large input fields on the left and text output on the right -->
+    <Grid>
+        <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="1*" />
+        <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        
+        <!-- Left part of the window -->
+        <ScrollViewer x:Name="ScrollViewerLeft"
+                      Background="#2E2D30" Grid.Column="0">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="Api Key" Foreground="White"/>
+                        <TextBox Text="{Binding ApiKey, Mode=TwoWay}" AcceptsReturn="True" Watermark="ChatGPT Api key"/>
+                        <TextBlock Text="Promt" Foreground="White"/>
+                        <TextBox Text="{Binding Promt, Mode=TwoWay}" AcceptsReturn="True" TextWrapping="Wrap" Watermark="Promt here"/>
+                        <TextBlock Text="Negative promt" Foreground="White"/>
+                        <TextBox Text="{Binding NegativePromt, Mode=TwoWay}" AcceptsReturn="True" TextWrapping="Wrap" Watermark="Negative promt here"/>
+                    </StackPanel>
+        </ScrollViewer>
+        
+        <!-- Right part of the window -->
+        <ScrollViewer x:Name="ScrollViewerRight"
+                      Background="#373639" Grid.Column="1">
+            <StackPanel Margin="10">
+                <Button Width="160" Foreground="White" Command="{Binding GenerateTabs}">
+                    Generate tabs
+                </Button>
+                <TextBlock Text="{Binding Title, Mode=TwoWay}" Foreground="White"/>
+                <TextBlock Text="{Binding Signature, Mode=TwoWay}" Foreground="White"/>
+                <TextBlock Text="{Binding Tempo, Mode=TwoWay}" Foreground="White"/>
+                <TextBlock Text="{Binding Key, Mode=TwoWay}" Foreground="White"/>
+                <TextBlock Text="{Binding Tuning, Mode=TwoWay}" Foreground="White"/>
+                <TextBlock Text="{Binding TabsText, Mode=TwoWay}" Foreground="White"/>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
 </UserControl>

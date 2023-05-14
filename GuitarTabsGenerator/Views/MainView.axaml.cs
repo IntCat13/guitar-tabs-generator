@@ -1,4 +1,8 @@
+using System;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
+using GeneratorLibrary.Models;
+using GeneratorLibrary.Generator;
 
 namespace GuitarTabsGenerator.Views;
 
