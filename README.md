@@ -9,14 +9,13 @@ load the already created tabs in text format for further modification.
 
 ## Current state of the project
 ### Already created
-- 
+- Web and Desktop UI
+- Generating tabs by Promt
 
 ### In the process of developing
 - Application core
-  - Generating tabs by Promt
   - Modifying existing tabs
   - Generation styles
   - Saving the generated tabs
   - Generation History
   - Configuration
-- Web UI
