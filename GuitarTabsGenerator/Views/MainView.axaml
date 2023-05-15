@@ -39,6 +39,7 @@
                 <Button Width="160" Foreground="White" Command="{Binding GenerateTabs}">
                     Generate tabs
                 </Button>
+                <TextBlock Text="{Binding Status, Mode=TwoWay}" Foreground="DarkGray"/>
                 <TextBlock Text="{Binding Title, Mode=TwoWay}" Foreground="White"/>
                 <TextBlock Text="{Binding Signature, Mode=TwoWay}" Foreground="White"/>
                 <TextBlock Text="{Binding Tempo, Mode=TwoWay}" Foreground="White"/>

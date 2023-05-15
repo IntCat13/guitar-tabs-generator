@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Avalonia.Interactivity;
 using GeneratorLibrary.Models;
 using GeneratorLibrary.Generator;
@@ -8,6 +9,13 @@ namespace GuitarTabsGenerator.ViewModels;
 
 public class MainViewModel : ViewModelBase
 {
+    private string _status;
+    public string Status
+    {
+        get => _status;
+        set => this.RaiseAndSetIfChanged(ref _status, value);
+    }
+    
     private string _signature;
     public string Signature
     {
@@ -56,13 +64,36 @@ public class MainViewModel : ViewModelBase
 
     public Tabs Tabs;
 
-    public void GenerateTabs()
+    public async void GenerateTabs()
     {
         if (IsInputNotValid())
+        {
+            Status = "Input is not valid";
             return;
+        }
 
-        Tabs = Generator.NewTabs(Promt, NegativePromt, ApiKey);
-        
+        Status = "Generating tabs...";
+        Task.Run(async delegate
+        {
+            await Task.Delay(1000);
+            TryToRequestTabs();
+        });
+    }
+
+    private async void TryToRequestTabs()
+    {
+        var completionResult = Task.Run(async delegate
+        {
+            await Task.Delay(1000);
+            return Generator.NewTabs(Promt, NegativePromt, ApiKey);
+        });
+        Tabs = completionResult.Result;
+        ShowTabs();
+    }
+
+    private void ShowTabs()
+    {
+        Status = "Tabs generated";
         Signature = "Time Signature:"+Tabs.TimeSignature;
         Tempo = "Tempo:"+Tabs.Tempo;
         Key = "Key:"+Tabs.Key;
@@ -70,7 +101,7 @@ public class MainViewModel : ViewModelBase
         Title = "Title:"+Tabs.Title;
         TabsText = Tabs.Content;
     }
-    
+
     public bool IsInputNotValid()
     {
         if (string.IsNullOrEmpty(ApiKey))

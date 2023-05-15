@@ -31,7 +31,7 @@ public class GptConnection
     // Method that make request to OpenAI API with defined configuration
     private async Task<ChatCompletionCreateResponse> CreateRequest(RequestConfig config)
     {
-        return await _openAiService.ChatCompletion.CreateCompletion(new ChatCompletionCreateRequest
+        var result = await _openAiService.ChatCompletion.CreateCompletion(new ChatCompletionCreateRequest
         {
             Messages = config.Messages,
             Model = config.Model,
@@ -39,27 +39,34 @@ public class GptConnection
             MaxTokens = config.MaxTokens,
             N = config.N
         });
+        return result;
     }
 
     // Method that returns response from OpenAI API
     public List<string> GetResponse(RequestConfig config)
     {
-        var completionResult = CreateRequest(config).Result;
+        //var completionResult = CreateRequest(config).Result;
+        var completionResult = Task.Run(async delegate
+        {
+            await Task.Delay(1000);
+            return CreateRequest(config).Result;
+        });
+        
         var response = new List<string>();
         
-        if (completionResult.Successful)
+        if (completionResult.Result.Successful)
         {
-            foreach (var choice in completionResult.Choices)
+            foreach (var choice in completionResult.Result.Choices)
                 response.Add(choice.Message.Content);
         }
         else
         {
             // If there is no error, throw an exception
-            if (completionResult.Error == null)
+            if (completionResult.Result.Error == null)
                 throw new Exception("Unknown Error");
             
             // If there is an error, add it to the response
-            response.Add($"{completionResult.Error.Code}: {completionResult.Error.Message}");
+            response.Add($"{completionResult.Result.Error.Code}: {completionResult.Result.Error.Message}");
         }
 
         return response;
