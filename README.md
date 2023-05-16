@@ -20,7 +20,7 @@ load the already created tabs in text format for further modification.
   - Generation History
   - Configuration
 
-## How to lunch
+## How to launch
 1. Open project in your IDE
 ![image](Screenshots/howToUse1.png)
 2. Select GuitarTabsGenerator.Desktop as build option
