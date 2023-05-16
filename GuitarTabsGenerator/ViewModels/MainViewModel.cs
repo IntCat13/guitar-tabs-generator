@@ -1,6 +1,8 @@
-﻿using System;
+﻿// Guitar Tabs Generator UI
+// Created by IntCat13 
+
+using System;
 using System.Threading.Tasks;
-using Avalonia.Interactivity;
 using GeneratorLibrary.Models;
 using GeneratorLibrary.Generator;
 using ReactiveUI;
@@ -9,6 +11,7 @@ namespace GuitarTabsGenerator.ViewModels;
 
 public class MainViewModel : ViewModelBase
 {
+    // Properties for binding
     private string _status;
     public string Status
     {
@@ -64,33 +67,32 @@ public class MainViewModel : ViewModelBase
 
     public Tabs Tabs;
 
-    public async void GenerateTabs()
+    // Method for generating tabs
+    public void GenerateTabs()
     {
+        // Check if input is valid
         if (IsInputNotValid())
-        {
-            Status = "Input is not valid";
             return;
-        }
 
-        Status = "Generating tabs...";
+        SetStatus("Generating tabs...");
+        
+        // Request tabs from API
         Task.Run(async delegate
         {
             await Task.Delay(1000);
-            TryToRequestTabs();
+            RequestTabs();
         });
     }
 
-    private async void TryToRequestTabs()
+    // Method for requesting tabs from API
+    private void RequestTabs()
     {
-        var completionResult = Task.Run(async delegate
-        {
-            await Task.Delay(1000);
-            return Generator.NewTabs(Promt, NegativePromt, ApiKey);
-        });
-        Tabs = completionResult.Result;
+        var completionResult = Generator.NewTabs(Promt, NegativePromt, ApiKey);
+        Tabs = completionResult;
         ShowTabs();
     }
 
+    // Method for showing tabs in UI
     private void ShowTabs()
     {
         Status = "Tabs generated";
@@ -102,17 +104,32 @@ public class MainViewModel : ViewModelBase
         TabsText = Tabs.Content;
     }
 
-    public bool IsInputNotValid()
+    // Input validation method
+    private bool IsInputNotValid()
     {
-        if (string.IsNullOrEmpty(ApiKey))
-            return true;
-        
-        if (string.IsNullOrEmpty(Promt))
-            return true;
-        
-        if (string.IsNullOrEmpty(NegativePromt))
-            return true;
+        bool isInputNotValid = false;
+        string errorMessage = "Input is not valid: ";
 
-        return false;
+        if (string.IsNullOrEmpty(ApiKey))
+        {
+            isInputNotValid = true;
+            errorMessage += "Api key is empty, ";
+        }
+
+        if (string.IsNullOrEmpty(Promt))
+        {
+            isInputNotValid = true;
+            errorMessage += "Promt is empty, ";
+        }
+
+        if (isInputNotValid)
+            SetStatus(errorMessage);
+
+        return isInputNotValid;
+    }
+    
+    private void SetStatus(string status)
+    {
+        Status = status;
     }
 }

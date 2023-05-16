@@ -1,4 +1,7 @@
-﻿namespace GeneratorLibrary.Models;
+﻿// Guitar Tabs Generator Library
+// Created by IntCat13 
+
+namespace GeneratorLibrary.Models;
 
 public struct Tabs
 {
@@ -19,6 +22,7 @@ public struct Tabs
         Content = content;
     }
 
+    // Show Tabs object in console
     public void Show()
     {
         if(TimeSignature != null)

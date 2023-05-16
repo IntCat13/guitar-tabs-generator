@@ -12,7 +12,7 @@
     <vm:MainViewModel />
   </Design.DataContext>
     
-  <!-- Dividing the window into two parts, with two large input fields on the left and text output on the right -->
+    <!-- Dividing the window into two parts, with two large input fields on the left and text output on the right -->
     <Grid>
         <Grid.ColumnDefinitions>
         <ColumnDefinition Width="1*" />
@@ -20,6 +20,9 @@
         </Grid.ColumnDefinitions>
         
         <!-- Left part of the window -->
+        <!-- Contains the input fields for the api key and the promt -->
+        <!-- TODO: Add additional input fields for the tempo, key, tuning, etc. -->
+        <!-- TODO: Add additional input for configure generation -->
         <ScrollViewer x:Name="ScrollViewerLeft"
                       Background="#2E2D30" Grid.Column="0">
                     <StackPanel Margin="10">
@@ -33,6 +36,8 @@
         </ScrollViewer>
         
         <!-- Right part of the window -->
+        <!-- Contains the output text and the button to generate tabs -->
+        <!-- TODO: Add additional buttons to save, load and clear tabs -->
         <ScrollViewer x:Name="ScrollViewerRight"
                       Background="#373639" Grid.Column="1">
             <StackPanel Margin="10">

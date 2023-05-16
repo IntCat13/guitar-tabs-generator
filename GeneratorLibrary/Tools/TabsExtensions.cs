@@ -1,4 +1,7 @@
-﻿using GeneratorLibrary.Models;
+﻿// Guitar Tabs Generator Library
+// Created by IntCat13 
+
+using GeneratorLibrary.Models;
 
 namespace GeneratorLibrary.Tools;
 
@@ -16,6 +19,9 @@ public static class TabsExtensions
       
       string[] lines = text.Split("\n");
 
+      // Check if string has incorrect structure
+      // If string has incorrect structure, return null
+      // Else return Tabs object
       foreach (var line in lines)
       {
          if (line.IsContainsElement("signature:"))
@@ -50,7 +56,8 @@ public static class TabsExtensions
          
          content += line+"\n";
       }
-
+      
+      // Return new Tabs object
       return new Tabs(timeSignature, tempo, key, tuning, title, content);
    }
 

@@ -1,8 +1,7 @@
-﻿using GeneratorLibrary.ApiConnection;
-using OpenAI.GPT3.ObjectModels;
+﻿// Guitar Tabs Generator Library
+// Created by IntCat13 
+
 using GeneratorLibrary.Models;
-using GeneratorLibrary.Tools;
-using OpenAI.GPT3.ObjectModels.RequestModels;
 
 namespace GeneratorLibrary.Generator;
 
