@@ -32,6 +32,11 @@
                         <TextBox Text="{Binding Promt, Mode=TwoWay}" AcceptsReturn="True" TextWrapping="Wrap" Watermark="Promt here"/>
                         <TextBlock Text="Negative promt" Foreground="White"/>
                         <TextBox Text="{Binding NegativePromt, Mode=TwoWay}" AcceptsReturn="True" TextWrapping="Wrap" Watermark="Negative promt here"/>
+                        
+                        <Grid ColumnDefinitions="3*,1.5*,1.5*" RowDefinitions="Auto,Auto,Auto"  Margin="5">
+                            <TextBlock Text="Amount of generations" Foreground="White" Grid.Row="0" Grid.Column="0"/>
+                            <NumericUpDown Value="1" AllowSpin="False" ShowButtonSpinner="False" Grid.Row="0" Grid.Column="2"/>
+                        </Grid>
                     </StackPanel>
         </ScrollViewer>
         
@@ -41,9 +46,15 @@
         <ScrollViewer x:Name="ScrollViewerRight"
                       Background="#373639" Grid.Column="1">
             <StackPanel Margin="10">
-                <Button Width="160" Foreground="White" Command="{Binding GenerateTabs}">
-                    Generate tabs
-                </Button>
+                <Grid ColumnDefinitions="1.5*,1.5*,1.5*" RowDefinitions="Auto,Auto,Auto"  Margin="5">
+                    <NumericUpDown Grid.Row="0" Grid.Column="0" Value="1" Width="100" Minimum="1" Maximum="5" Increment="1"/>
+                    <Button Grid.Row="0" Grid.Column="1" Foreground="White" Command="{Binding GenerateTabs}">
+                        Generate tabs
+                    </Button>
+                    <Button Grid.Row="0" Grid.Column="2" Foreground="White" Command="{Binding GenerateTabs}">
+                        Copy tabs
+                    </Button>
+                </Grid>
                 <TextBlock Text="{Binding Status, Mode=TwoWay}" Foreground="DarkGray"/>
                 <TextBlock Text="{Binding Title, Mode=TwoWay}" Foreground="White"/>
                 <TextBlock Text="{Binding Signature, Mode=TwoWay}" Foreground="White"/>
