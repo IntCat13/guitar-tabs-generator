@@ -2,6 +2,7 @@
 // Created by IntCat13 
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using GeneratorLibrary.Models;
 using GeneratorLibrary.Generator;
@@ -65,7 +66,53 @@ public class MainViewModel : ViewModelBase
     public string Promt { get; set; }
     public string NegativePromt { get; set; }
 
-    public Tabs Tabs;
+    private int _currentTabs = 0;
+    public int CurrentTabs
+    {
+        get => _currentTabs;
+        set
+        {
+            this.RaiseAndSetIfChanged(ref _currentTabs, value);
+            this.ShowTabs();
+        }
+    }
+
+
+    private int _generationAmount = 1;
+    public int GenerationAmount
+    {
+        get => _generationAmount;
+        set => this.RaiseAndSetIfChanged(ref _generationAmount, value);
+    }
+    
+    private int _lastGenerationAmount = 0;
+    public int LastGenerationAmount
+    {
+        get => _lastGenerationAmount;
+        set
+        {
+            if (value < 0)
+                return;
+            
+            this.RaiseAndSetIfChanged(ref _lastGenerationAmount, value);
+        }
+    }
+    
+    private float _generationAccuracy = 0.5f;
+    public float GenerationAccuracy
+    {
+        get => _generationAccuracy;
+        set => this.RaiseAndSetIfChanged(ref _generationAccuracy, value);
+    }
+    
+    private int _maxTokens = 300;
+    public int MaxTokens
+    {
+        get => _maxTokens;
+        set => this.RaiseAndSetIfChanged(ref _maxTokens, value);
+    }
+
+    private List<Tabs> _tabs;
 
     // Method for generating tabs
     public void GenerateTabs()
@@ -87,21 +134,26 @@ public class MainViewModel : ViewModelBase
     // Method for requesting tabs from API
     private void RequestTabs()
     {
-        var completionResult = Generator.NewTabs(Promt, NegativePromt, ApiKey);
-        Tabs = completionResult;
+        var completionResult = Generator.NewTabs(Promt, NegativePromt, GenerationAmount, GenerationAccuracy, MaxTokens, ApiKey);
+        _tabs = completionResult;
+        CurrentTabs = 0;
+        LastGenerationAmount = GenerationAmount-1;
         ShowTabs();
     }
 
     // Method for showing tabs in UI
     private void ShowTabs()
     {
+        if (_tabs.Count < CurrentTabs)
+            return;
+        
         Status = "Tabs generated";
-        Signature = "Time Signature:"+Tabs.TimeSignature;
-        Tempo = "Tempo:"+Tabs.Tempo;
-        Key = "Key:"+Tabs.Key;
-        Tuning = "Tuning:"+Tabs.Tuning;
-        Title = "Title:"+Tabs.Title;
-        TabsText = Tabs.Content;
+        Signature = "Time Signature:"+_tabs[CurrentTabs].TimeSignature;
+        Tempo = "Tempo:"+_tabs[CurrentTabs].Tempo;
+        Key = "Key:"+_tabs[CurrentTabs].Key;
+        Tuning = "Tuning:"+_tabs[CurrentTabs].Tuning;
+        Title = "Title:"+_tabs[CurrentTabs].Title;
+        TabsText = _tabs[CurrentTabs].Content;
     }
 
     // Input validation method

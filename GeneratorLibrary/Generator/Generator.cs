@@ -5,6 +5,7 @@ using GeneratorLibrary.ApiConnection;
 using GeneratorLibrary.Models;
 using GeneratorLibrary.Tools;
 using OpenAI.GPT3.ObjectModels.RequestModels;
+using System.Linq;
 
 namespace GeneratorLibrary.Generator;
 
@@ -13,7 +14,7 @@ namespace GeneratorLibrary.Generator;
 public class Generator
 {
     // New Tabs object
-    public static Tabs NewTabs (string positivePromt, string negativePromt, string apiKey)
+    public static List<Tabs> NewTabs (string positivePromt, string negativePromt, int generationsAmount, float generationAccuracy, int maxTokens, string apiKey)
     {
         // Create new GptConnection
         // GptConnection is a class that contains method for sending requests to OpenAI API
@@ -33,11 +34,17 @@ public class Generator
                 ChatMessage.FromSystem("You are a guitar tabs creator"),
                 ChatMessage.FromUser(promt)
             },
-            OpenAI.GPT3.ObjectModels.Models.ChatGpt3_5Turbo
+            OpenAI.GPT3.ObjectModels.Models.ChatGpt3_5Turbo,
+            generationAccuracy,
+            maxTokens,
+            generationsAmount
         );
 
         // Get response from OpenAI API
-        Tabs tabs = gptConnection.GetResponse(requestConfig)[0].TryParseTabs();
+        List<Tabs> tabs = gptConnection
+            .GetResponse(requestConfig)
+            .Select(x => x.TryParseTabs())
+            .ToList();
         return tabs;
     }
 }
