@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using GeneratorLibrary.Models;

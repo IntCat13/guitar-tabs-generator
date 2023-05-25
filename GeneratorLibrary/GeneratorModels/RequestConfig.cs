@@ -21,4 +21,23 @@ public struct RequestConfig
         MaxTokens = maxTokens;
         N = n;
     }
+    
+    public RequestConfig(string positivePromt, string negativePromt, string model, float temperature = 0.5f, int maxTokens = 300, int n = 1)
+    {
+        string promt =
+            "Create the tabs for the guitar, the structure should be as follows Time Signature, Tempo, Key, Tuning, Tile, Guitar Tabs. The tabs have to be " +
+            positivePromt+ ". ";
+        if(string.IsNullOrEmpty(negativePromt) == false)
+            promt += "The tabs must not be " + negativePromt;
+
+        Messages = new List<ChatMessage>
+        {
+            ChatMessage.FromSystem("You are a guitar tabs creator"),
+            ChatMessage.FromUser(promt)
+        };
+        Model = model;
+        Temperature = temperature;
+        MaxTokens = maxTokens;
+        N = n;
+    }
 }

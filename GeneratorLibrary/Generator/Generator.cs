@@ -14,31 +14,14 @@ namespace GeneratorLibrary.Generator;
 public class Generator
 {
     // New Tabs object
-    public static List<Tabs> NewTabs (string positivePromt, string negativePromt, int generationsAmount, float generationAccuracy, int maxTokens, string apiKey)
+    public static List<Tabs> NewTabs (RequestConfig config, string apiKey)
     {
         // Create new GptConnection
         // GptConnection is a class that contains method for sending requests to OpenAI API
         GptConnection gptConnection = new GptConnection(apiKey);
 
-        // Building promt for OpenAI API
-        string promt =
-            "Create the tabs for the guitar, the structure should be as follows Time Signature, Tempo, Key, Tuning, Tile, Guitar Tabs. The tabs have to be " +
-            positivePromt+ ". ";
-        if(string.IsNullOrEmpty(negativePromt) == false)
-            promt += "The tabs must not be " + negativePromt;
-        
         // Building request config for OpenAI API
-        RequestConfig requestConfig = new RequestConfig(
-            new List<ChatMessage>
-            {
-                ChatMessage.FromSystem("You are a guitar tabs creator"),
-                ChatMessage.FromUser(promt)
-            },
-            OpenAI.GPT3.ObjectModels.Models.ChatGpt3_5Turbo,
-            generationAccuracy,
-            maxTokens,
-            generationsAmount
-        );
+        RequestConfig requestConfig = config;
 
         // Get response from OpenAI API
         List<Tabs> tabs = gptConnection
