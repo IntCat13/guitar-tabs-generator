@@ -11,6 +11,7 @@ load the already created tabs in text format for further modification.
 ### Already created
 - Web and Desktop UI
 - Generating tabs by Promt
+- Configuration
 
 ### In the process of developing
 - Application core
@@ -18,7 +19,6 @@ load the already created tabs in text format for further modification.
   - Generation styles
   - Saving the generated tabs
   - Generation History
-  - Configuration
 
 ## How to launch
 1. Open project in your IDE
