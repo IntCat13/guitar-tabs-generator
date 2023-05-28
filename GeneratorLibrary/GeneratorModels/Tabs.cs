@@ -22,6 +22,17 @@ public struct Tabs
         Content = content;
     }
 
+    // Test constructor that create test content of tabs type
+    public Tabs()
+    {
+        TimeSignature = "4/4";
+        Tempo = "120";
+        Key = "C";
+        Tuning = "EADGBE";
+        Title = "Test";
+        Content = "e|-----------------|\nB|-----------------|\nG|-----------------|\nD|-----------------|\nA|-----------------|\nE|-----------------|\n";
+    }
+
     // Show Tabs object in console
     public void Show()
     {
